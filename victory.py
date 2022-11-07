@@ -40,8 +40,8 @@ CELEBRITIES = {
         }
 }
 
-right_answers = 0;
-errors = 0;
+right_answers = 0
+errors = 0
 
 # Функции
 
@@ -53,45 +53,48 @@ rand_celebrity = random.choice(celebrities_keys)
 
 # Цикл опроса по году рождения
 while True:
-  # rand_celebrity =  random.choice(celebrities_keys)
   try:
     input_celebrity_birthday_year = int(input('В каком году родился '
                                               + CELEBRITIES[rand_celebrity]['full_name'] + ': '))
+    if int(input_celebrity_birthday_year) != int(CELEBRITIES[rand_celebrity]['birthday'][-4:]):
+        print('Хм...' + str(input_celebrity_birthday_year) + '?'
+              + ' ', WRONG_ANSWERS[random.randrange(2)]
+              + ' Попробуйте еще разок.')
+        errors = errors + 1
+        continue
+    else:
+        print('Молодец! Верно.', end='')
+        right_answers = right_answers + 1
+
+        # Допрос в цикле по дате рождения
+        while True:
+            try:
+                input_celebrity_birthday_date = input('А знаете какого числа родился '
+                                                      + CELEBRITIES[rand_celebrity]['full_name']
+                                                      + '?' + ' Введите дату и месяц в формате dd.mm: ')
+            except ValueError:
+                print('Что-то не так с форматом ввода')
+            if str(input_celebrity_birthday_date) != str(CELEBRITIES[rand_celebrity]['birthday'][:5]):
+                print(str(input_celebrity_birthday_date) + '?' + WRONG_ANSWERS[random.randrange(2)])
+                print('Попробуйте еще разок. ', end='')
+                errors = errors + 1
+            else:
+                print('Молодец! Верно...')
+                right_answers = right_answers + 1
+                break
   except ValueError:
     print('Используйте только целые числа!')
-  if int(input_celebrity_birthday_year) != int(CELEBRITIES[rand_celebrity]['birthday'][-4:]):
-    print('Хм...' + str(input_celebrity_birthday_year) + '?'
-          + ' ', WRONG_ANSWERS[random.randrange(2)]
-          + ' Попробуйте еще разок.')
-    errors = errors + 1
+    rand_celebrity = random.choice(celebrities_keys)
     continue
-  else:
-    print('Молодец! Верно.', end='')
-    right_answers = right_answers + 1
 
-    # Допрос в цикле по дате рождения
-    while True:
-      try:
-        input_celebrity_birthday_date = input('А знаете какого числа родился '
-                                              + CELEBRITIES[rand_celebrity]['full_name']
-                                              + '?' + ' Введите дату и месяц в формате dd.mm: ')
-      except ValueError:
-        print('Что-то не так с форматом ввода')
-      if str(input_celebrity_birthday_date) != str(CELEBRITIES[rand_celebrity]['birthday'][:5]):
-        print(str(input_celebrity_birthday_date) + '?' + WRONG_ANSWERS[random.randrange(2)])
-        print('Попробуйте еще разок. ', end='')
-        errors = errors + 1
-      else:
-        print('Молодец! Верно...')
-        right_answers = right_answers + 1
-        break
+
 
   breaking = input('Хотите закончить викторину  и узнать счет? да/нет: ')
 
   if breaking.lstrip().rstrip() == 'да':
-    print('Результат викторины тут...')
-    print(f'Правильных ответов: {right_answers} ({right_answers*100/(right_answers + errors)}%)')
-    print(f'Ошибок: {errors} ({errors*100/(right_answers + errors)}%')
+    print('Результат викторины ниже...')
+    print(f'Правильных ответов: {right_answers} ({right_answers * 100/(right_answers + errors)}%)')
+    print(f'Ошибок: {errors} ({errors * 100/(right_answers + errors)}%')
     break
   elif breaking.lstrip().rstrip() == 'нет':
     rand_celebrity = random.choice(celebrities_keys)
