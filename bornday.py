@@ -1,18 +1,12 @@
-from random import randrange
-
-right_pushkin_birthday = 1799
-wrong_answers = ['Капец! Ответ неверный!', 'Стыдуха! Каждый россиянин должен знать ДР Саши Пушкина!', 'Ужос! Идите в библиотеку...']
-while True:
-  try:
-    input_pushkin_birthday = int(input('Введите год рождения Саши Пушкина?: '))
-  except ValueError:
-    print('Используйте только целое число!')
-    continue
-  if input_pushkin_birthday != right_pushkin_birthday:
-    print(str(input_pushkin_birthday)+'?', wrong_answers[randrange(2)])
+input_pushkin_birthday_year = input('Введите год рождения Саши Пушкина?: ')
+if input_pushkin_birthday_year == '1799':
+  input_pushkin_birthday_day = input('Введите день рождения Саши Пушкина в формате DD.MM?: ')
+  if input_pushkin_birthday_day == '06.06':
+    print('Верно!')
   else:
-    print('Молодец! Верно..')
-    break
+    print('Неверный лень рождения!')
+else:
+  print('Неверный год!')
 
 
 
